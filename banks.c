@@ -1,5 +1,5 @@
 
-/*#define ALL_BANKS*/
+#define ALL_BANKS
 
 #ifdef ALL_BANKS
 #   define  BCO_001
@@ -17,10 +17,6 @@
 #ifdef CLIENT_CARIOCA
 #   define  BCO_341_198
 #   define  BCO_399_CNR
-#endif
-
-#ifdef CLIENT_DIMARCO_SAFRA
-#   define  BCO_237_SAFRA
 #endif
 
 #ifdef CLIENT_DIMARCO
@@ -64,17 +60,6 @@ static BANK bancos[] = {
          {F_Nosso_Numero,  0,   11},
          {F_Cod_Cedente,   0,    7},
          {FF_FIXED,        0,    1,   0L},
-         {FF_END}
-        }
-       },
-#endif
-#ifdef BCO_237_SAFRA
-       { 237, "Bradesco (via Safra)", "",
-        {{F_Agencia,       0,    4},
-         {F_Carteira_N,    0,    2},
-         {F_Nosso_Numero,  0,   11},
-         {F_Cod_Cedente,   0,    6},
-         {FF_FIXED,        0,    2,   0L},
          {FF_END}
         }
        },
@@ -294,6 +279,7 @@ static struct {
   { 409, 72 },
   { 231, 72 },
   { 320, 72 },
+  { 389, 57 },
   { 453, 72 }
 };
 
