@@ -1,0 +1,12 @@
+ *********************************************
+ *  Proceda da seguinte forma:               *
+ *                                           *
+ *  1 - Entre no Write e carrege o arquivo   *
+ *      .WRI.                                *
+ *  2 - Imprima para o arquivo .PRN, utili-  *
+ *      zando o driver para HP LaserJet      *
+ *      Series II, folha A4                  *
+ *  3 - Rode o make novamente                *
+ *                                           *
+ *     (c) 1995, por General Software        *
+ *********************************************

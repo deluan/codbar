@@ -1,0 +1,27 @@
+
+Como criar os arquivos de Formulario Personalizados para cada Banco
+
+
+Consideracoes iniciais:
+
+- Use o Corel Draw 6
+- Nomenclatura:
+
+  Arquivo fonte:
+
+	LGO{BANCO}_{V}.cdr
+	
+	onde:
+
+	{BANCO}:	Codigo numerico do Banco (3 digitos)
+	{V}:		Versao do bloqueto (1 ou 2)
+
+  Arquivo final:
+
+	codbar.{BANCO}
+
+
+
+1) Abra o arquivo no Corel. Edite se necessario
+2) Imprima para arquivo, usando o driver "HP LaserJet series II". A extensao deve ser .prn
+3) Use o programa makeform.c para gerar o arquivo final
