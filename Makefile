@@ -84,12 +84,10 @@ sidix:
 
 # MinGW: Wintel with MinGW installed (www.mingw.org)
 mingw:
-	@c:/mingw/bin/mingw32-make \
+	@$(MAKE) \
 	     CFLAGS="-O -Ic:/mingw/include -Ddos -Dgnu" \
-	     MAKE="c:/mingw/bin/mingw32-make.exe" \
-	     CC="c:/mingw/bin/gcc" \
-	     BIND="c:/mingw/bin/gcc" \
-	     REMOVE="del" \
+	     CC="gcc" \
+	     BIND="gcc" \
 	     EXEEXT=".exe" \
 	     OBJS="$(OBJS) getopt.o" \
 	     all
@@ -100,9 +98,12 @@ cygwin:
 
 # Win32: Wintel with Borland C++ 5.5 Free compiler
 win32:
-	make CFLAGS="-O" \
+	make CFLAGS="-O -Ic:/borland/bcc55/include -VM" \
 	     CC="c:/borland/bcc55/bin/bcc32" \
 	     BIND="c:\borland\bcc55\bin\ilink32" \
+	     EXEEXT=".exe" \
+	     OBJEXT=".obj" \
+	     OBJS="$(OBJS) getopt.obj" \
 	     all
 
 #**********************************************************************
@@ -146,14 +147,11 @@ dump dump.exe: dump.o
 bak \
 zip:
 	$(REMOVE) *.bak core
-	$(ZIP) -uo codbar.zip * -x *.o codbar *.zip dump makeform makecfg
+	$(ZIP) -uo codbar.zip * -x *.o codbar *.zip dump$(EXEEXT) makeform$(EXEEXT) makecfg$(EXEEXT)
 	l codbar.zip
 
 clean:
 	-$(REMOVE) $(OBJS) codbar$(EXEEXT) makecfg$(EXEEXT) \
-	makeform$(EXEEXT) dump$(EXEEXT) *.bak core .sum
-
-	-del $(OBJS) codbar$(EXEEXT) makecfg$(EXEEXT) \
 	makeform$(EXEEXT) dump$(EXEEXT) *.bak core .sum
 
 #**********************************************************************
