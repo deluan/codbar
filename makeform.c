@@ -88,6 +88,7 @@ static COMMAND form_1[] = {
        { C_LOADFONT,            0,   0, "ari08n__.sft"},
        { C_LOADFONT,            0,   0, "ari09b__.sft"},
        { C_LOADFONT,            0,   0, "ari10n__.sft"},
+//       { C_LOADFONT,            0,   0, "ari14b__.sft"},
 
        /* Comandos Dinamicos */
        { C_EXECMACRO,           1,   0},
@@ -186,6 +187,7 @@ static COMMAND form_1[] = {
        /* Imprime linha digitavel */
        { C_OFS,                 0,   0},
        { C_SELECTFONT,          0,   0, "ari10n__.sft"},
+//       { C_SELECTFONT,          0,   0, "ari14b__.sft"},
        { C_PRINTCALC,          74, 191},
 
        /* Fim do Bloqueto */
