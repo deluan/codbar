@@ -2,3 +2,6 @@ old_versions
 *.exe
 *.obj
 *.bak
+*.o
+*.map
+.sum

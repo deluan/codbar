@@ -35,7 +35,11 @@
 #include "banks.c"
 
 #ifdef dos
+#ifndef gnu
 #  include <alloc.h>
+#else
+#  define coreleft()  32767
+#endif
 #else /* !dos */
 #  define coreleft()  32767
 #endif /* ?dos */

@@ -31,6 +31,10 @@ extern int dberror;
 #  define INT_MAX 32767
 #endif
 
+#ifndef MAX
+#  define MAXINT INT_MAX
+#endif
+
 /* function prototype statements */
 
 PROFILE *dbinit   OF((char *));

@@ -20,18 +20,22 @@ CFLAGS  = -F -O
 LFLAGS1 =
 LFLAGS2 = -s
 
-OBJS   = cbcapt.o cbcfg.o cbini.o cbcalc.o cbi25.o \
-	cbprint.o cbpcode.o winprof.o cbmain.o prot.o
+EXEEXT  = 
+OBJEXT  = .o
+OBJS    = cbcapt$(OBJEXT) cbcfg$(OBJEXT) cbini$(OBJEXT) \
+	cbcalc$(OBJEXT) cbi25$(OBJEXT) cbprint$(OBJEXT) \
+	cbpcode$(OBJEXT) winprof$(OBJEXT) cbmain$(OBJEXT) 
+# prot.o
 
-MAKE   = make
-CC     = cc
-BIND   = cc
-RENAME = mv
-COPY   = cp
-REMOVE = rm -f
-ZIP    = zipx
-UNZIP  = unzipx
-STRIP  = strip
+MAKE    = make
+CC      = cc
+BIND    = cc
+RENAME  = mv
+COPY    = cp
+REMOVE  = rm -f
+ZIP     = zipx
+UNZIP   = unzipx
+STRIP   = strip
 
 BIN    = /usr/local/bin
 
@@ -54,7 +58,7 @@ list:
 	@echo ''
 	@echo 'Digite "make <system>", onde <system> deve ser um dos seguintes:'
 	@echo ''
-	@echo ' aix, sysv, sidix ou linux'
+	@echo ' aix, sysv, sidix, linux, mingw, cygwin ou win32'
 	@echo ''
 	@echo\
  'Ou entao atribua um destes a variavel SYSTEM e simplesmente digite "make".'
@@ -78,9 +82,31 @@ linux:
 sidix:
 	@$(MAKE) all CFLAGS="-O -F"
 
+# MinGW: Wintel with MinGW installed (www.mingw.org)
+mingw:
+	c:/mingw/bin/mingw32-make \
+	     CFLAGS="-O -Ic:/mingw/include -Ddos -Dgnu" \
+	     MAKE="c:/mingw/bin/mingw32-make.exe" \
+	     CC="c:/mingw/bin/gcc" \
+	     BIND="c:/mingw/bin/gcc" \
+	     OBJEXT=".o" EXEEXT=".exe" \
+	     OBJS="$(OBJS) getopt.o" \
+	     all
+
+# CYGWIN: Wintel with Cygwin installed (www.cygwin.com)
+cygwin:
+	/bin/make all MAKE="/bin/make" CFLAGS="-O" CC="/bin/gcc" BIND="/bin/gcc"
+
+# Win32: Wintel with Borland C++ 5.5 Free compiler
+win32:
+	make CFLAGS="-O" \
+	     CC="c:/borland/bcc55/bin/bcc32" \
+	     BIND="c:\borland\bcc55\bin\ilink32" \
+	     all
+
 #**********************************************************************
 
-all: codbar codbar.cfg makeform dump
+all: codbar$(EXEEXT) codbar.cfg makeform$(EXEEXT) dump$(EXEEXT)
 
 install: all $(BIN)/codbar $(CODBAR_DIR)/codbar.cfg $(CODBAR_DIR)/codbar.ini
 	cp codbar.[0-9][0-9][0-9] $(CODBAR_DIR)
@@ -98,20 +124,20 @@ $(CODBAR_DIR)/codbar.cfg: codbar.cfg
 $(CODBAR_DIR)/codbar.ini: codbar.ini
 	cp codbar.ini $(CODBAR_DIR)
 
-codbar: $(OBJS)
-	$(BIND) $(LFLAGS1) $(OBJS) $(LFLAGS2) -o codbar
+codbar codbar.exe: $(OBJS)
+	$(BIND) $(LFLAGS1) $(OBJS) $(LFLAGS2) -o codbar$(EXEEXT)
 
-codbar.cfg: makecfg
+codbar.cfg: makecfg$(EXEEXT)
 	./makecfg
 
-makeform: makeform.o
-	$(BIND) $(LFLAGS1) makeform.o $(LFLAGS2) -o makeform
+makeform makeform.exe: makeform.o
+	$(BIND) $(LFLAGS1) makeform.o $(LFLAGS2) -o makeform$(EXEEXT)
 
-makecfg: makecfg.o
-	$(BIND) $(LFLAGS1) makecfg.o $(LFLAGS2) -o makecfg
+makecfg makecfg.exe: makecfg.o
+	$(BIND) $(LFLAGS1) makecfg.o $(LFLAGS2) -o makecfg$(EXEEXT)
 
-dump: dump.o
-	$(BIND) $(LFLAGS1) dump.o $(LFLAGS2) -o dump
+dump dump.exe: dump.o
+	$(BIND) $(LFLAGS1) dump.o $(LFLAGS2) -o dump$(EXEEXT)
 
 .sum:
 	@echo \#define SUM  \"`uname -a | sum`\" > .sum
@@ -129,29 +155,29 @@ clean:
 #* The Editor Modules                                                 *
 #**********************************************************************
 
-cbmain.o: codbar.h winprof.h
+cbmain$(OBJEXT): codbar.h winprof.h
 
-cbcapt.o: codbar.h winprof.h
+cbcapt$(OBJEXT): codbar.h winprof.h
 
-cbcfg.o: codbar.h winprof.h
+cbcfg$(OBJEXT): codbar.h winprof.h
 
-cbini.o: codbar.h winprof.h
+cbini$(OBJEXT): codbar.h winprof.h
+	
+cbcalc$(OBJEXT): codbar.h winprof.h
+	
+cbi25$(OBJEXT): codbar.h winprof.h
+	
+cbprint$(OBJEXT): codbar.h winprof.h pcl.h
+	
+cbpcode$(OBJEXT): codbar.h winprof.h pcl.h
+	
+winprof$(OBJEXT): winprof.h
+	
+makecfg$(OBJEXT): codbar.h winprof.h banks.c
+	
+makeform$(OBJEXT): codbar.h winprof.h pcl.h banks.c
 
-cbcalc.o: codbar.h winprof.h
+dump$(OBJEXT): codbar.h winprof.h
 
-cbi25.o: codbar.h winprof.h
-
-cbprint.o: codbar.h winprof.h pcl.h
-
-cbpcode.o: codbar.h winprof.h pcl.h
-
-winprof.o: winprof.h
-
-makecfg.o: codbar.h winprof.h banks.c
-
-makeform.o: codbar.h winprof.h pcl.h banks.c
-
-dump.o: codbar.h winprof.h
-
-prot.o: .sum
+prot$(OBJEXT): .sum
 
