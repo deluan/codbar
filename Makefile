@@ -84,12 +84,13 @@ sidix:
 
 # MinGW: Wintel with MinGW installed (www.mingw.org)
 mingw:
-	c:/mingw/bin/mingw32-make \
+	@c:/mingw/bin/mingw32-make \
 	     CFLAGS="-O -Ic:/mingw/include -Ddos -Dgnu" \
 	     MAKE="c:/mingw/bin/mingw32-make.exe" \
 	     CC="c:/mingw/bin/gcc" \
 	     BIND="c:/mingw/bin/gcc" \
-	     OBJEXT=".o" EXEEXT=".exe" \
+	     REMOVE="del" \
+	     EXEEXT=".exe" \
 	     OBJS="$(OBJS) getopt.o" \
 	     all
 
@@ -149,7 +150,11 @@ zip:
 	l codbar.zip
 
 clean:
-	$(REMOVE) $(OBJS) codbar makecfg makeform dump *.bak core .sum
+	-$(REMOVE) $(OBJS) codbar$(EXEEXT) makecfg$(EXEEXT) \
+	makeform$(EXEEXT) dump$(EXEEXT) *.bak core .sum
+
+	-del $(OBJS) codbar$(EXEEXT) makecfg$(EXEEXT) \
+	makeform$(EXEEXT) dump$(EXEEXT) *.bak core .sum
 
 #**********************************************************************
 #* The Editor Modules                                                 *
@@ -162,19 +167,19 @@ cbcapt$(OBJEXT): codbar.h winprof.h
 cbcfg$(OBJEXT): codbar.h winprof.h
 
 cbini$(OBJEXT): codbar.h winprof.h
-	
+
 cbcalc$(OBJEXT): codbar.h winprof.h
-	
+
 cbi25$(OBJEXT): codbar.h winprof.h
-	
+
 cbprint$(OBJEXT): codbar.h winprof.h pcl.h
-	
+
 cbpcode$(OBJEXT): codbar.h winprof.h pcl.h
-	
+
 winprof$(OBJEXT): winprof.h
-	
+
 makecfg$(OBJEXT): codbar.h winprof.h banks.c
-	
+
 makeform$(OBJEXT): codbar.h winprof.h pcl.h banks.c
 
 dump$(OBJEXT): codbar.h winprof.h
