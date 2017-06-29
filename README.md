@@ -1,6 +1,6 @@
-##CODBAR 
+## CODBAR 
 
-###Impressão de Bloquetos de Cobrança com Código de Barra
+### Impressão de Bloquetos de Cobrança com Código de Barra
 
 
 Estou publicando este projeto por razões "históricas", pois atualmente existem soluções melhores. 
